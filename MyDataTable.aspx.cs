@@ -17,6 +17,7 @@ public partial class MyDataTable : System.Web.UI.Page
         if (!IsPostBack)
             myDataTable();
         // First Line
+        // Bug Fixed
     }
     private void myDataTable()
     {
