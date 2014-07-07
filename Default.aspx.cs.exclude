@@ -1,0 +1,144 @@
+using System;
+using System.Data;
+using System.Configuration;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+
+public partial class _Default : System.Web.UI.Page 
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (Page.IsPostBack)
+        {
+            dynColumns();
+        }
+    }
+    public void dynColumns()
+    {
+        Table table = null;
+        TableRow row = null;
+        TableCell cell = null;
+        Label lbl = null; //, lbl1 = null;
+        TextBox tb = null;
+        //DropDownList ddl = null;
+        Button btSave = null;
+        try
+        {
+            int n = int.Parse(txtNoColumns1.Text);
+            table = new Table();
+            table.ID = "Table1";
+            for (int i = 1; i <= n; i++)
+            {
+                row = new TableRow();
+                for (int j = 1; j <= 2; j++)
+                {
+                    cell = new TableCell();
+                    lbl = new Label();
+                    lbl.Text = "Column " + i + " Name : ";
+                    cell.Controls.Add(lbl);
+                    row.Cells.Add(cell);
+                    j++;
+                    tb = new TextBox();
+                    tb.ID = "txtColumn" + i.ToString();
+                    //tb.Text = (string)ViewState["txt-DB" + i];
+                    cell.Controls.Add(tb);
+                    row.Cells.Add(cell);
+                    /*j++;
+                    lbl1 = new Label();
+                    lbl1.Text = "Data Type : ";
+                    cell.Controls.Add(lbl1);
+                    row.Cells.Add(cell);
+                    j++;
+                    ddl = new DropDownList();
+                    ddl.ID = "ddlDataType" + i.ToString();
+                    ddl.Items.Add(new ListItem("Int"));
+                    ddl.Items.Add(new ListItem("char(10)"));
+                    ddl.Items.Add(new ListItem("nchar(10)"));
+                    ddl.Items.Add(new ListItem("datetime"));
+                    ddl.Items.Add(new ListItem("numeric(18,0)"));
+                    ddl.Items.Add(new ListItem("nvarchar(50)"));
+                    ddl.Items.Add(new ListItem("nvarchar(MAX)"));
+                    ddl.Items.Add(new ListItem("varchar(50)"));
+                    ddl.Items.Add(new ListItem("varchar(MAX)"));
+                    cell.Controls.Add(ddl);
+                    row.Cells.Add(cell);*/
+                }
+                table.Rows.Add(row);
+            }
+            phOutputHere.Controls.Add(table);
+            btSave = new Button();
+            btSave.ID = "btSave1";
+            btSave.Text = "Create Table";
+            btSave.Click += new EventHandler(btSaveDB);
+            phOutputHere.Controls.Add(btSave);
+        }
+        catch (Exception er)
+        {
+            lbl = new Label();
+            lbl.Text = "<br/><span id=\"lbl1\" style=\"color:Red;\"/>Catch err : " + er;
+            phOutputHere.Controls.Add(lbl);
+        }
+        finally
+        {
+            if (table != null)
+                table.Dispose();
+            if (row != null)
+                row.Dispose();
+            if (cell != null)
+                cell.Dispose();
+            if (lbl != null)
+                lbl.Dispose();
+            if (tb != null)
+                tb.Dispose();
+            if (ddl != null)
+                ddl.Dispose();
+        }
+    }
+    public void btSaveDB(object sender, EventArgs e)
+    {
+        Label lblCreate = null, lblUpdate = null, lblCatch = null;
+        TextBox c = null;
+        DropDownList d = null;
+        DataTable myTable = null;
+        DataColumn dcMyTable=null;
+        try
+        {
+            int n = int.Parse(txtNoColumns1.Text);
+            myTable = new DataTable(txtTableName1.Text);
+            for (int i = 1; i <= n; i++)
+            {
+                c = this.Page.FindControl("txtColumn" + i) as TextBox;
+                //d = this.Page.FindControl("ddlDataType"+i) as DropDownList;
+                if (c != null && d != null)
+                {
+                    dcMyTable = new DataColumn(c.Text);
+                    //dcMyTable=new DataColumn(c.Text, Type d.Text);
+                }
+            }
+        }
+        catch (Exception er)
+        {
+            lblCatch = new Label();
+            lblCatch.Text = "<br/><span id=\"lbl1\" style=\"color:Red;\"/>Catch err : " + er;
+            phOutputHere.Controls.Add(lblCatch);
+        }
+        finally
+        {
+            if (sqlconnObj != null)
+            {
+                if (sqlconnObj.State.Equals(ConnectionState.Open))
+                    sqlconnObj.Close();
+                sqlconnObj.Dispose();
+            }
+            if (sqlcmdObj != null)
+                sqlcmdObj.Dispose();
+            sqlConnectionString = null;
+            sqlCreateQuery = null;
+            sqlUpdateQuery = null;
+        }
+    }
+}

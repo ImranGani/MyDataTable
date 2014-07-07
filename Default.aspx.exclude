@@ -1,0 +1,42 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true"  CodeFile="Default.aspx.cs" Inherits="_Default" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <title>Untitled Page</title>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <table>
+            <tr>
+                <td style="width: 162px; height: 26px">
+                    Enter Table Name</td>
+                <td style="width: 335px; height: 26px">
+                    <asp:TextBox ID="txtTableName1" runat="server"></asp:TextBox></td>
+            </tr>
+            <tr>
+                <td style="width: 162px">
+                    Enter No. Columns</td>
+                <td style="width: 335px">
+                    <asp:TextBox ID="txtNoColumns1" runat="server"></asp:TextBox>
+                    <asp:Button ID="Button1" runat="server" Text="Submit" />
+                    <asp:RangeValidator ID="RangeValidator1" runat="server" ControlToValidate="txtNoColumns1"
+                        ErrorMessage="Make sure that you choose a value between 1 and 15!" MaximumValue="15"
+                        MinimumValue="1" Type="Integer"></asp:RangeValidator>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <br />
+                    <asp:PlaceHolder ID="phOutputHere" runat="server"></asp:PlaceHolder>
+                    <br />
+                </td>
+            </tr>
+        </table>
+    
+    </div>
+    </form>
+</body>
+</html>
