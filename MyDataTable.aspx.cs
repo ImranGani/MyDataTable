@@ -20,7 +20,6 @@ public partial class MyDataTable : System.Web.UI.Page
         // Bug Fixed
         // Dev1 Testing Line
         // Test 1
-        // Test 2
     }
     private void myDataTable()
     {
