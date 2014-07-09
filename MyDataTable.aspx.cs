@@ -24,6 +24,7 @@ public partial class MyDataTable : System.Web.UI.Page
         // Demo 1
         // Demo 2
         // Demo Master 1
+        // Demo Master 2
     }
     private void myDataTable()
     {
